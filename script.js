@@ -49,6 +49,27 @@ filterButtons.forEach(button => {
   });
 });
 
+// Mobile Menu Toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav ul');
+
+if (menuToggle) {
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (nav && nav.classList.contains('active')) {
+    if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+      menuToggle.classList.remove('active');
+      nav.classList.remove('active');
+    }
+  }
+});
+
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
@@ -56,6 +77,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     
     const targetId = this.getAttribute('href');
     const targetElement = document.querySelector(targetId);
+    
+    // Close mobile menu if open
+    if (nav && nav.classList.contains('active')) {
+      menuToggle.classList.remove('active');
+      nav.classList.remove('active');
+    }
     
     window.scrollTo({
       top: targetElement.offsetTop - 80, // Adjust for header height
