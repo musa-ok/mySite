@@ -1,0 +1,8 @@
+node_modules
+dist
+.DS_Store
+SKILL.md
+/ML_udemy*.pdf
+/Musa_Ok*.pdf
+WhatsApp*
+public/musa.jpg
