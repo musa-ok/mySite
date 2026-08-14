@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cp docs/index.html . && rm -rf assets certs && cp -R docs/assets assets && cp -R docs/certs certs && touch .nojekyll",
     "preview": "vite preview"
   },
   "dependencies": {
