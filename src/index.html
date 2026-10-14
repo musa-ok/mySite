@@ -3,95 +3,132 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#050506" />
+    <meta name="theme-color" content="#f7f6f3" />
     <title>Musa Ok — Yapay Zeka · NLP · Edge AI</title>
     <meta
       name="description"
       content="İstanbul Arel Üniversitesi Bilgisayar Mühendisliği. Yapay zeka, NLP, RAG ve Edge AI."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Serif:ital@1&display=swap"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <canvas id="grain" class="grain" aria-hidden="true"></canvas>
-    <div class="spot" id="spot" aria-hidden="true"></div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
 
     <header class="nav" id="nav">
-      <a class="nav-mark" href="#top">
-        <span class="mono">MO</span>
-        Musa Ok
-      </a>
+      <a class="logo" href="#top">musa<span>.</span></a>
       <nav class="nav-links" aria-label="Sayfa">
-        <a href="#is">İş</a>
-        <a href="#deneyim">Yol</a>
-        <a href="#sertifikalar">Belgeler</a>
+        <a href="#is">İşler</a>
+        <a href="#hakkimda">Hakkımda</a>
+        <a class="nav-cta" href="#iletisim">Konuşalım ↗</a>
       </nav>
-      <a class="nav-cta" href="#iletisim">
-        <span>İletişim</span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-          <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
-        </svg>
-      </a>
     </header>
-    <div class="progress" id="progress" aria-hidden="true"></div>
 
     <main id="top">
       <section class="hero">
-        <div class="hero-copy">
-          <p class="kicker">İstanbul · Arel · 3. sınıf</p>
-          <h1 class="display">
-            Zekâyı<br />
-            <em>kenara</em><br />
-            taşıyorum.
-          </h1>
-          <p class="lede">
-            NLP, RAG ve Edge AI. Modelleri eğitip yayınlıyor; yerel LLM ve vektör
-            belleklerle üretim sistemleri kuruyorum.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#is">Seçilmiş işler</a>
-            <a class="btn btn-ghost" href="mailto:musaok425@gmail.com">musaok425@gmail.com</a>
+        <h1 class="hello">
+          Merhaba, ben Musa.<br />
+          Zekâyı <em>kenara</em> taşıyan<br />
+          meraklı bir zihin.
+        </h1>
+
+        <div class="kb-stage" id="kb-stage">
+          <div class="kb-glow" aria-hidden="true"></div>
+          <nav class="kb" id="kb" aria-label="Portfolyo bölümleri">
+            <a class="key" href="#is" data-key="p" style="--c: #f59bc4; --x: 50; --y: 0">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>P</b><small>Seçilmiş işler</small></span></span>
+            </a>
+            <a class="key" href="#hakkimda" data-key="o" style="--c: #a9a8f7; --x: 158; --y: 0">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>O</b><small>Hakkımda</small></span></span>
+            </a>
+            <a class="key" href="#deneyim" data-key="r" style="--c: #8ee0b1; --x: 266; --y: 0">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>R</b><small>Yolum</small></span></span>
+            </a>
+            <a class="key" href="#yetenekler" data-key="t" style="--c: #ffbe73; --x: 374; --y: 0">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>T</b><small>Ne yapıyorum</small></span></span>
+            </a>
+            <a class="key" href="https://github.com/musa-ok" target="_blank" rel="noreferrer" data-key="f" style="--c: #63b0f7; --x: 0; --y: 108">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>F</b><small>Keşfet</small></span></span>
+            </a>
+            <a class="key" href="#egitim" data-key="o" style="--c: #bd8af3; --x: 108; --y: 108">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>O</b><small>Eğitim</small></span></span>
+            </a>
+            <a class="key" href="#sertifikalar" data-key="l" style="--c: #ff9152; --x: 216; --y: 108">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>L</b><small>Belgeler</small></span></span>
+            </a>
+            <a class="key" href="https://huggingface.co/Musa-ok" target="_blank" rel="noreferrer" data-key="y" style="--c: #7b95ff; --x: 324; --y: 108">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>Y</b><small>Modellerim</small></span></span>
+            </a>
+            <a class="key" href="mailto:musaok425@gmail.com" data-key="o" style="--c: #9fdc5e; --x: 432; --y: 108">
+              <span class="key-wall"></span><span class="key-cap"><span class="key-top"><b>O</b><small>Merhaba de</small></span></span>
+            </a>
+            <a class="key key-enter" href="#iletisim" data-key="enter" aria-label="Konuşalım" style="--c: #ffd43b; --x: 482; --y: 0">
+              <svg class="enter-wall" viewBox="0 0 150 208" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M15,0 H135 Q150,0 150,15 V193 Q150,208 135,208 H73 Q58,208 58,193 V115 Q58,100 43,100 H15 Q0,100 0,85 V15 Q0,0 15,0 Z" />
+              </svg>
+              <span class="key-cap">
+                <svg viewBox="0 0 150 208" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="enter-top" x1="0" y1="0" x2="0.6" y2="1">
+                      <stop offset="0" style="stop-color: var(--top)" />
+                      <stop offset="0.7" style="stop-color: var(--c)" />
+                    </linearGradient>
+                    <linearGradient id="enter-gloss" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#fff" stop-opacity="0.6" />
+                      <stop offset="0.35" stop-color="#fff" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path class="enter-base" d="M15,0 H135 Q150,0 150,15 V193 Q150,208 135,208 H73 Q58,208 58,193 V115 Q58,100 43,100 H15 Q0,100 0,85 V15 Q0,0 15,0 Z" />
+                  <path class="enter-face" fill="url(#enter-top)" d="M19,5 H131 Q142,5 142,16 V182 Q142,193 131,193 H77 Q66,193 66,182 V96 Q66,85 55,85 H19 Q8,85 8,74 V16 Q8,5 19,5 Z" />
+                  <path fill="url(#enter-gloss)" d="M19,5 H131 Q142,5 142,16 V182 Q142,193 131,193 H77 Q66,193 66,182 V96 Q66,85 55,85 H19 Q8,85 8,74 V16 Q8,5 19,5 Z" />
+                </svg>
+                <span class="enter-glyph" aria-hidden="true">↵</span>
+                <small class="enter-label" aria-hidden="true">Konuşalım</small>
+              </span>
+            </a>
+          </nav>
+        </div>
+        <p class="kb-hint">Bir tuşa bas ya da klavyende yaz.</p>
+
+        <div class="strip" aria-hidden="true">
+          <div class="strip-track">
+            <span>Oyunbaz fikirler. Düşünülmüş sistemler.</span><span>Modelleri eğitip uca taşıyorum.</span><span>PyTorch</span><span>LangGraph</span><span>ONNX</span><span>Qdrant</span><span>Ollama</span><span>Hugging Face</span>
+            <span>Oyunbaz fikirler. Düşünülmüş sistemler.</span><span>Modelleri eğitip uca taşıyorum.</span><span>PyTorch</span><span>LangGraph</span><span>ONNX</span><span>Qdrant</span><span>Ollama</span><span>Hugging Face</span>
           </div>
         </div>
-        <aside class="hero-stage" aria-hidden="true">
-          <div class="orb"></div>
-          <svg class="orbit" viewBox="0 0 420 420">
-            <circle cx="210" cy="210" r="148" />
-            <circle cx="210" cy="210" r="108" />
-            <circle cx="210" cy="210" r="68" />
-          </svg>
-          <div class="chip chip-a">ONNX</div>
-          <div class="chip chip-b">Qdrant</div>
-          <div class="chip chip-c">Phi-3</div>
-          <div class="stat-float">
-            <strong>91.9</strong>
-            <span>F1 · Türkçe NER</span>
-          </div>
-        </aside>
       </section>
 
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker-track">
-          <span>PyTorch</span><span>FastAPI</span><span>LangGraph</span><span>ONNX</span><span>Qdrant</span><span>Ollama</span><span>Hugging Face</span><span>Redis</span><span>PostgreSQL</span><span>XLM-RoBERTa</span>
-          <span>PyTorch</span><span>FastAPI</span><span>LangGraph</span><span>ONNX</span><span>Qdrant</span><span>Ollama</span><span>Hugging Face</span><span>Redis</span><span>PostgreSQL</span><span>XLM-RoBERTa</span>
-        </div>
-      </div>
-
-      <section class="facts">
-        <a href="https://github.com/musa-ok" target="_blank" rel="noreferrer">
-          <b>GitHub</b>
-          <span>Açık repolar — musa-ok</span>
-        </a>
-        <a href="https://huggingface.co/Musa-ok" target="_blank" rel="noreferrer">
-          <b>Hugging Face</b>
-          <span>Türkçe NER · %91.9 F1</span>
-        </a>
-        <div>
-          <b>Microsoft</b>
-          <span>AI Innovators intern</span>
-        </div>
-        <div>
-          <b>Arel</b>
-          <span>Bilgisayar mühendisliği · 3. sınıf</span>
+      <section id="hakkimda" class="band">
+        <header class="band-head">
+          <p class="kicker">Hakkımda</p>
+          <h2 class="headline">NLP, RAG ve Edge AI üzerine çalışıyorum.</h2>
+          <p class="lede">
+            Modelleri eğitip yayınlıyor; yerel LLM ve vektör belleklerle üretim
+            sistemleri kuruyorum.
+          </p>
+        </header>
+        <div class="facts">
+          <a href="https://github.com/musa-ok" target="_blank" rel="noreferrer">
+            <b>GitHub</b>
+            <span>Açık repolar — musa-ok</span>
+          </a>
+          <a href="https://huggingface.co/Musa-ok" target="_blank" rel="noreferrer">
+            <b>Hugging Face</b>
+            <span>Türkçe NER · %91.9 F1</span>
+          </a>
+          <div>
+            <b>Microsoft</b>
+            <span>AI Innovators intern</span>
+          </div>
+          <div>
+            <b>Arel</b>
+            <span>Bilgisayar mühendisliği · 3. sınıf</span>
+          </div>
         </div>
       </section>
 
@@ -231,7 +268,7 @@
         </div>
       </section>
 
-      <section class="edu-band">
+      <section id="egitim" class="edu-band">
         <div class="edu-card">
           <p class="kicker">Eğitim</p>
           <h2>İstanbul Arel Üniversitesi</h2>
@@ -268,7 +305,7 @@
 
       <section id="iletisim" class="close">
         <p class="kicker">İletişim</p>
-        <h2 class="display sm">Sıradaki sistemi<br />birlikte kuralım.</h2>
+        <h2 class="display">Sıradaki sistemi<br /><em>birlikte</em> kuralım.</h2>
         <p class="lede">Staj, araştırma veya ürün. Tek bir not yeter.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="mailto:musaok425@gmail.com">E-posta gönder</a>

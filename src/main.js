@@ -75,43 +75,6 @@ function historyVelocity(samples) {
   return ((b.x - a.x) / dt) * 1000;
 }
 
-/* Film grain */
-const grain = document.getElementById("grain");
-const gctx = grain.getContext("2d");
-function paintGrain() {
-  const w = (grain.width = 180);
-  const h = (grain.height = 180);
-  const img = gctx.createImageData(w, h);
-  for (let i = 0; i < img.data.length; i += 4) {
-    const v = (Math.random() * 255) | 0;
-    img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
-    img.data[i + 3] = 255;
-  }
-  gctx.putImageData(img, 0, 0);
-}
-paintGrain();
-
-/* Spotlight follows pointer, velocity-aware spring */
-const spot = document.getElementById("spot");
-let sx = innerWidth * 0.7;
-let sy = innerHeight * 0.2;
-let tx = sx;
-let ty = sy;
-window.addEventListener("pointermove", (e) => {
-  tx = e.clientX;
-  ty = e.clientY;
-});
-function loopSpot() {
-  if (!reduced) {
-    sx += (tx - sx) * 0.08;
-    sy += (ty - sy) * 0.08;
-    spot.style.left = `${sx}px`;
-    spot.style.top = `${sy}px`;
-  }
-  requestAnimationFrame(loopSpot);
-}
-loopSpot();
-
 const progress = document.getElementById("progress");
 window.addEventListener(
   "scroll",
@@ -124,7 +87,7 @@ window.addEventListener(
 );
 
 /* Press */
-document.querySelectorAll("[data-press], .btn, .tile, .feature").forEach((el) => {
+document.querySelectorAll("[data-press], .tile, .feature").forEach((el) => {
   el.addEventListener("pointerdown", () => {
     if (reduced) return;
     animate(el, { scale: 0.985 }, spring({ duration: 0.22 }));
@@ -136,6 +99,126 @@ document.querySelectorAll("[data-press], .btn, .tile, .feature").forEach((el) =>
   el.addEventListener("pointerup", up);
   el.addEventListener("pointercancel", up);
 });
+
+/* Keyboard: keys drop in, tilt toward the pointer, type on their own, and answer the real keyboard */
+const stage = document.getElementById("kb-stage");
+const kb = document.getElementById("kb");
+const keys = [...kb.querySelectorAll(".key")];
+if (!reduced) {
+  keys.forEach((key, i) => {
+    key.style.opacity = "0";
+    animate(
+      key,
+      { opacity: [0, 1], y: [-60, 0] },
+      { type: "spring", bounce: 0.5, duration: 0.7, delay: 0.15 + i * 0.06 }
+    ).finished.then(() => {
+      key.style.transform = "";
+      key.style.opacity = "";
+    });
+  });
+}
+
+let lastInput = performance.now();
+let pointer = null;
+window.addEventListener("pointermove", (e) => {
+  pointer = { x: e.clientX / innerWidth - 0.5, y: e.clientY / innerHeight - 0.5 };
+  lastInput = performance.now();
+});
+document.documentElement.addEventListener("pointerleave", () => (pointer = null));
+
+let rx = 22;
+let ry = 0;
+function tiltLoop(t) {
+  let tx;
+  let ty;
+  if (pointer && performance.now() - lastInput < 2500) {
+    tx = 22 - pointer.y * 16;
+    ty = pointer.x * 22;
+  } else {
+    // idle: a slow sway so it never sits still
+    tx = 22 + Math.sin(t / 1400) * 4;
+    ty = Math.sin(t / 2100) * 9;
+  }
+  rx += (tx - rx) * 0.07;
+  ry += (ty - ry) * 0.07;
+  kb.style.setProperty("--rx", `${rx.toFixed(2)}deg`);
+  kb.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
+  requestAnimationFrame(tiltLoop);
+}
+if (!reduced) requestAnimationFrame(tiltLoop);
+
+function press(key, ms = 140) {
+  key.classList.add("is-down");
+  setTimeout(() => key.classList.remove("is-down"), ms);
+}
+
+const palette = ["#f59bc4", "#a9a8f7", "#8ee0b1", "#ffbe73", "#ffd43b", "#63b0f7", "#bd8af3", "#ff9152", "#9fdc5e"];
+function confetti() {
+  if (reduced) return;
+  for (let i = 0; i < 36; i++) {
+    const bit = document.createElement("span");
+    bit.className = "confetti";
+    bit.style.background = palette[i % palette.length];
+    stage.append(bit);
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 140 + Math.random() * 220;
+    animate(
+      bit,
+      {
+        x: [0, Math.cos(angle) * dist],
+        y: [0, Math.sin(angle) * dist * 0.7 - 120, Math.sin(angle) * dist * 0.7 + 160],
+        rotate: [0, (Math.random() - 0.5) * 720],
+        opacity: [1, 1, 0],
+      },
+      { duration: 1.3 + Math.random() * 0.5, ease: "easeOut" }
+    ).finished.then(() => bit.remove());
+  }
+}
+
+/* Types PORTFOLYO↵ by itself while nobody is touching it */
+const order = keys.filter((k) => k !== kb.querySelector(".key-enter"));
+order.push(kb.querySelector(".key-enter"));
+let typing = false;
+async function autoType() {
+  if (typing || reduced) return;
+  typing = true;
+  for (const key of order) {
+    press(key, 120);
+    await new Promise((r) => setTimeout(r, 130));
+  }
+  typing = false;
+}
+setTimeout(autoType, 1800);
+setInterval(() => {
+  if (performance.now() - lastInput > 6000 && !document.hidden) autoType();
+}, 9000);
+
+const cycle = {};
+function keyFor(name) {
+  const matches = keys.filter((k) => k.dataset.key === name);
+  if (matches.length < 2) return matches[0];
+  cycle[name] = ((cycle[name] ?? -1) + 1) % matches.length;
+  return matches[cycle[name]];
+}
+let typed = "";
+document.addEventListener("keydown", (e) => {
+  if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+  lastInput = performance.now();
+  const name = e.key === "Enter" ? "enter" : e.key.toLocaleLowerCase("tr");
+  if (name === "p") delete cycle.o; // start the O's over for each new word
+  const key = keyFor(name);
+  if (!key) {
+    typed = "";
+    return;
+  }
+  press(key);
+  typed = (typed + name).slice(-9);
+  if (typed === "portfolyo") {
+    typed = "";
+    confetti();
+  }
+});
+kb.querySelector(".key-enter").addEventListener("click", confetti);
 
 /* Reveal */
 if (!reduced) {
