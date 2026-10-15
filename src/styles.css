@@ -581,6 +581,7 @@ main {
 }
 .path li:nth-child(2) { --dot: #8ee0b1; }
 .path li:nth-child(3) { --dot: #f59bc4; }
+.path li:nth-child(4) { --dot: #a9a8f7; }
 .path time {
   color: var(--mute);
   font-variant-numeric: tabular-nums;
